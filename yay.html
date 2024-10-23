@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RBXLUAU</title>
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
+    <style>
+        /* Existing styles... */
+        
+        .main-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            text-align: center;
+        }
+
+        .main-button {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            background-color: #6200ea;
+            color: white;
+            cursor: pointer;
+            margin: 10px;
+            transition: background-color 0.3s;
+        }
+
+        .main-button:hover {
+            background-color: #3700b3;
+        }
+    </style>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RBXLUAU</title>
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
+    <style>
+        body {
+            background-color: #121212;
+            color: #ffffff;
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+            min-height: 100vh;
+            overflow-y: auto;
+        }
+
+        h1 {
+            font-size: 48px;
+            margin: 0;
+            text-align: center;
+        }
+
+        .login-button {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            background-color: #6200ea;
+            color: white;
+            cursor: pointer;
+            text-decoration: none;
+            transition: background-color 0.3s;
+        }
+
+        .login-button:hover {
+            background-color: #3700b3;
+        }
+
+        .key-message {
+            color: #ffffff;
+            margin-top: 10px;
+            font-size: 18px;
+            transition: color 0.5s;
+        }
+
+        #key-input, #unlock-button, #login-button, #signup-button {
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            width: 80%;
+            max-width: 400px;
+            margin: 20px 0;
+            background-color: #1e1e1e;
+            color: #ffffff;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+            font-size: 16px;
+        }
+
+        .container {
+            text-align: center;
+            max-width: 600px;
+            padding: 20px;
+            display: none; /* Initially hidden */
+        }
+
+        .product {
+            background-color: #1e1e1e;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+            overflow: hidden;
+        }
+
+        .product-image {
+            max-width: 100%;
+            height: auto;
+            border-radius: 10px;
+            margin-bottom: 10px;
+        }
+
+        .product-title {
+            margin: 10px 0;
+            font-size: 26px;
+        }
+
+        .product-description {
+            margin: 10px 0;
+            padding-bottom: 20px;
+        }
+
+        .download-button {
+            background-color: #6200ea;
+            color: white;
+            padding: 12px 24px;
+            border: none;
+            border-radius: 5px;
+            text-decoration: none;
+            transition: background-color 0.3s, transform 0.2s;
+            z-index: 1;
+            position: relative;
+            margin-top: 20px;
+        }
+
+        .download-button:hover {
+            background-color: #3700b3;
+            transform: scale(1.05);
+        }
+
+        #search-bar {
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            width: 80%;
+            max-width: 400px;
+            margin: 20px 0;
+            background-color: #1e1e1e;
+            color: #ffffff;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+            font-size: 16px;
+        }
+
+        #search-bar::placeholder {
+            color: #aaa;
+        }
+
+        .fade-in {
+            opacity: 0;
+            animation: fadeIn 0.5s forwards;
+        }
+
+        @keyframes fadeIn {
+            to {
+                opacity: 1;
+            }
+        }
+
+        .account-container {
+            margin: auto; /* Centering the container */
+            padding: 20px;
+            border: 1px solid #aaa;
+            border-radius: 10px;
+            background-color: #1e1e1e;
+            position: absolute; /* Position absolute to center it */
+            top: 50%; /* Align vertically */
+            left: 50%; /* Align horizontally */
+            transform: translate(-50%, -50%); /* Center it */
+            text-align: center; /* Center text inside */
+        }
+
+        .account-input {
+            margin: 10px 0;
+            padding: 10px;
+            border-radius: 5px;
+            border: none;
+            width: calc(100% - 20px);
+            background-color: #2a2a2a;
+            color: white;
+        }
+
+        .key-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            position: absolute; /* Position absolute to take it out of the flow */
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%); /* Center it vertically and horizontally */
+            text-align: center; /* Center text inside */
+        }
+    </style>
+</head>
+<body>
+    <div class="account-container" id="signup-container">
+        <h2>Sign Up</h2>
+        <input type="text" id="signup-username" class="account-input" placeholder="Username" aria-label="Username" maxlength="8">
+        <input type="password" id="signup-password" class="account-input" placeholder="Password" aria-label="Password" maxlength="8">
+        <button id="signup-button" class="download-button">Sign Up</button>
+        <div id="signup-message" class="key-message" role="alert"></div>
+        <button id="go-to-login" class="download-button" style="margin-top: 10px;">Already have an account? Log In</button>
+    </div>
+
+    <div class="account-container" id="login-container" style="display: none;">
+        <h2>Log In</h2>
+        <input type="text" id="login-username" class="account-input" placeholder="Username" aria-label="Username" maxlength="8">
+        <input type="password" id="login-password" class="account-input" placeholder="Password" aria-label="Password" maxlength="8">
+        <button id="login-button" class="download-button">Log In</button>
+        <div id="login-message" class="key-message" role="alert"></div>
+        <button id="go-to-signup" class="download-button" style="margin-top: 10px;">Don't have an account? Sign Up</button>
+    </div>
+
+    <div class="key-container" style="display: none;">
+        <div id="key-message" class="key-message fade-in">Enter the key to unlock the products:</div>
+        <input type="text" id="key-input" placeholder="Enter your key here..." aria-label="Key input">
+        <button id="unlock-button" class="download-button">Unlock</button>
+        <button id="logout-button" class="download-button" style="margin-top: 20px;">Log Out</button>
+    </div>
+
+    <div class="container fade-in" id="product-container">
+        <h1>RBXLUAU</h1>
+        <input type="text" id="search-bar" placeholder="Search for products..." oninput="filterProducts()">
+        
+        <div class="product fade-in" data-title="Cozy Blanket">
+            <img src="https://i.ytimg.com/vi/HrlCCkJ-kkA/hq720.jpg?sqp=-oaymwEhCK4FEIIDSFryq4qpAxMIARUAAAAAGAElAADIQj0AgKJD&rs=AOn4CLBBbp1AuUg7J7LQ2L3Q2fAQ7alEKA" alt="Cozy Blanket" class="product-image">
+            <h2 class="product-title">Solara V3</h2>
+            <p class="product-description">73% UNC / Decompiler</p>
+            <a href="https://f29cc861.solaraweb-alj.pages.dev/download/static/files/Bootstrapper.exe" class="download-button" download>Download</a>
+        </div>
+
+        <div class="product fade-in" data-title="Cute Mug">
+            <img src="https://i.ytimg.com/vi/0GT3wPIVy3A/maxresdefault.jpg" alt="Cute Mug" class="product-image">
+            <h2 class="product-title">Celery Installer (PAID)</h2>
+            <p class="product-description">90% UNC / Decompiler</p>
+            <a href="https://cdn.discordapp.com/attachments/1239664136208646184/1295432642417655868/CeleryInstaller.exe?ex=6715e169&is=67148fe9&hm=ccdcd9455d25da338feaefd7da93ca21c15429606d42fd1aa2f8843d453fe778&" class="download-button" download>Download</a>
+        </div>
+
+        <div class="product fade-in" data-title="Snug Socks">
+            <img src="https://static.wixstatic.com/media/c998ed_ed81cbd391e84c54b2cfa1c8f99d5de1~mv2.png/v1/fill/w_640,h_360,al_c,q_85,usm_0.66_1.00_0.01,enc_auto/c998ed_ed81cbd391e84c54b2cfa1c8f99d5de1~mv2.png" alt="Snug Socks" class="product-image">
+            <h2 class="product-title">Salty Utility</h2>
+            <p class="product-description">60% UNC / Decompiler</p>
+            <a href="https://example.com/download/socks" class="download-button" download>Download</a>
+        </div>
+
+        <div class="product fade-in" data-title="Stylish Backpack">
+            <img src="https://i.ytimg.com/vi/QdIjUGZ_6zg/maxresdefault.jpg" alt="Stylish Backpack" class="product-image">
+            <h2 class="product-title">Manti WPF</h2>
+            <p class="product-description">UNC 80% / Decompiler</p>
+            <a href="https://example.com/download/backpack" class="download-button" download>Download</a>
+        </div>
+
+        <div class="product fade-in" data-title="Stylish Backpack">
+            <img src="https://i.ytimg.com/vi/QdIjUGZ_6zg/maxresdefault.jpg" alt="Stylish Backpack" class="product-image">
+            <h2 class="product-title">Sk</h2>
+            <p class="product-description">UNC 80% / Decompiler</p>
+            <a href="https://example.com/download/backpack" class="download-button" download>Download</a>
+        </div>
+    </div>
+
+    <script>
+        const keys = ['KEY-noerw12Jsinabg21416', 'KEY-2', 'KEY-3'];
+        const usedKeys = JSON.parse(localStorage.getItem('usedKeys')) || {};
+
+        function filterProducts() {
+            const searchValue = document.getElementById('search-bar').value.toLowerCase();
+            const products = document.querySelectorAll('.product');
+
+            products.forEach(product => {
+                const title = product.getAttribute('data-title').toLowerCase();
+                product.style.display = title.includes(searchValue) ? 'block' : 'none';
+            });
+        }
+
+        function redeemKey(username, inputKey) {
+            if (usedKeys[inputKey] && usedKeys[inputKey] !== username) {
+                return 'Key has already been redeemed by another account.';
+            }
+            
+            if (keys.includes(inputKey)) {
+                usedKeys[inputKey] = username;
+                localStorage.setItem('usedKeys', JSON.stringify(usedKeys));
+                return 'Key redeemed successfully! Unlocking products...';
+            } else {
+                return 'Invalid key. Please try again.';
+            }
+        }
+
+        document.getElementById('unlock-button').addEventListener('click', function() {
+            const keyInput = document.getElementById('key-input').value.trim();
+            const username = document.getElementById('login-username').value.trim() || document.getElementById('signup-username').value.trim();
+            const keyMessage = document.getElementById('key-message');
+
+            const redemptionResult = redeemKey(username, keyInput);
+            
+            keyMessage.textContent = redemptionResult;
+            keyMessage.style.color = redemptionResult.includes('successfully') ? '#90ee90' : 'white';
+            
+            if (redemptionResult.includes('successfully')) {
+                document.getElementById('product-container').style.display = 'block';
+                setTimeout(() => {
+                    keyMessage.style.display = 'none';
+                }, 2000);
+                document.getElementById('key-input').style.display = 'none';
+                document.getElementById('unlock-button').style.display = 'none';
+                const products = document.querySelectorAll('.fade-in');
+                products.forEach(product => product.classList.add('fade-in'));
+            } else {
+                setTimeout(() => {
+                    keyMessage.textContent = 'Enter the key to unlock the products:';
+                    keyMessage.style.color = 'white';
+                }, 2000);
+            }
+        });
+
+        document.getElementById('signup-button').addEventListener('click', function() {
+            const username = document.getElementById('signup-username').value.trim();
+            const password = document.getElementById('signup-password').value.trim();
+            const signupMessage = document.getElementById('signup-message');
+
+            if (username.length > 8 || password.length > 8) {
+                signupMessage.textContent = 'Username and password must be 8 characters or less.';
+                signupMessage.style.color = 'white';
+                return;
+            }
+
+            localStorage.setItem(username, password);
+            signupMessage.textContent = 'Account created! You can now log in.';
+            signupMessage.style.color = '#90ee90';
+        });
+
+        document.getElementById('login-button').addEventListener('click', function() {
+            const username = document.getElementById('login-username').value.trim();
+            const password = document.getElementById('login-password').value.trim();
+            const loginMessage = document.getElementById('login-message');
+
+            if (localStorage.getItem(username) === password) {
+                loginMessage.textContent = 'Login successful! Welcome!';
+                loginMessage.style.color = '#90ee90';
+
+                document.getElementById('signup-container').style.display = 'none';
+                document.getElementById('login-container').style.display = 'none';
+                document.querySelector('.key-container').style.display = 'flex';
+                document.getElementById('product-container').style.display = 'none';
+
+            } else {
+                loginMessage.textContent = 'Invalid username or password.';
+                loginMessage.style.color = 'white';
+            }
+        });
+
+        document.getElementById('logout-button').addEventListener('click', function() {
+            document.getElementById('key-input').value = '';
+            document.getElementById('product-container').style.display = 'none';
+            document.querySelector('.key-container').style.display = 'none';
+            document.getElementById('signup-container').style.display = 'block';
+            document.getElementById('login-container').style.display = 'none';
+
+            document.getElementById('signup-message').textContent = '';
+            document.getElementById('login-message').textContent = '';
+        });
+
+        document.getElementById('go-to-login').addEventListener('click', function() {
+            document.getElementById('signup-container').style.display = 'none';
+            document.getElementById('login-container').style.display = 'block';
+        });
+
+        document.getElementById('go-to-signup').addEventListener('click', function() {
+            document.getElementById('login-container').style.display = 'none';
+            document.getElementById('signup-container').style.display = 'block';
+        });
+    </script>
+</body>
+</html>
